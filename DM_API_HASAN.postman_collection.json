@@ -1,0 +1,4196 @@
+{
+	"info": {
+		"_postman_id": "7d5da6db-2e32-4a10-b3f0-8a426e6b89ff",
+		"name": "DM_API_HASAN",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23316531",
+		"_collection_link": "https://grey-meteor-224295.postman.co/workspace/245999be-b58f-4c98-880d-4eed9ed8bb60/collection/23316531-7d5da6db-2e32-4a10-b3f0-8a426e6b89ff?action=share&source=collection_link&creator=23316531"
+	},
+	"item": [
+		{
+			"name": "1.1Admin",
+			"item": [
+				{
+					"name": "Log in",
+					"item": [
+						{
+							"name": "Negative TC",
+							"item": [
+								{
+									"name": "Negative_Login with wrong email",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const jsonData= pm.response.json()\r",
+													"\r",
+													"\r",
+													"pm.test(\"If Enter wrong user Email Should be Show 'User not found'\", function () {\r",
+													"    pm.expect(jsonData.message).to.eql(\"User not found\")\r",
+													"})\r",
+													"\r",
+													"pm.test(\"Status code for Wrong Email is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"email\": \"admin2@dmoney.com\",\r\n  \"password\": \"12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/login",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative_Login with Wrong password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const jsonData= pm.response.json()\r",
+													"\r",
+													"\r",
+													"pm.test(\"If Enter wrong Password Should be Show 'Password incorrect'\", function () {\r",
+													"    pm.expect(jsonData.message).to.eql(\"Password incorrect\")\r",
+													"})\r",
+													"\r",
+													"pm.test(\"Status code for Wrong Password is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"email\": \"admin@dmoney.com\",\r\n  \"password\": \"12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/login",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative_Shouldnot be Create-new if Token has expired",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code Should be 403\", function () {\r",
+													"    pm.response.to.have.status(403);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.test(\"Should not be logged in if the 'token has Expired'\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Token invalid\");\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const lodash=require('lodash')\r",
+													"//import lodash from 'lodash'; //es6\r",
+													"\r",
+													"const randomNumber= lodash.random(001,100);\r",
+													"const BDphoneNumber = '015000100' + randomNumber.toString();\r",
+													"// console.log(BDphoneNumber)\r",
+													"\r",
+													"pm.collectionVariables.set(\"BDphoneNo\", BDphoneNumber)\r",
+													"//pm.environment.set(\"Customer_Phone\", BDphoneNumber);\r",
+													"//pm.environment.set(\"AgentphoneNo\", phoneNumber);\r",
+													"\r",
+													"\r",
+													"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+													"pm.collectionVariables.set(\"NameCount\", count);\r",
+													"// console.log(count)\r",
+													"//{{$timestamp}} {{$randomInt}}"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-AUTH-SECRET-KEY",
+												"value": " ROADTOSDET",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"Oceane41@yahoo.com\",\r\n  \"password\": \"-1234*\",\r\n  \"phone_number\": \"{{BDphoneNo}}\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Merchant\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/create",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"create"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData= pm.response.json()\r",
+											"const access_token= jsonData.token\r",
+											"//pm.collectionVariables.set(\"token\",access_token)\r",
+											"pm.environment.set(\"token_admin\", access_token)\r",
+											"\r",
+											"pm.test(\"Verify Admin login is successful\", function () {\r",
+											"    pm.expect(jsonData.message).to.eql(\"Login successful\")\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Status code is 200 for Login\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"admin@dmoney.com\",\r\n  \"password\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/user/login",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Account",
+					"item": [
+						{
+							"name": "Negative TC",
+							"item": [
+								{
+									"name": "Negative_Create-new-with existing User Email",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code for Existing Email is 208\", function () {\r",
+													"    pm.response.to.have.status(208);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Show ‘User already exists’ if the phone Email is already in use.\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"User already exists\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const lodash=require('lodash')\r",
+													"//import lodash from 'lodash'; //es6\r",
+													"\r",
+													"const randomNumber= lodash.random(001,100);\r",
+													"const BDphoneNumber = '015000100' + randomNumber.toString();\r",
+													"// console.log(BDphoneNumber)\r",
+													"\r",
+													"pm.collectionVariables.set(\"BDphoneNo\", BDphoneNumber)\r",
+													"//pm.environment.set(\"Customer_Phone\", BDphoneNumber);\r",
+													"//pm.environment.set(\"AgentphoneNo\", phoneNumber);\r",
+													"\r",
+													"\r",
+													"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+													"pm.collectionVariables.set(\"NameCount\", count);\r",
+													"// console.log(count)\r",
+													"//{{$timestamp}} {{$randomInt}}"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-AUTH-SECRET-KEY",
+												"value": " ROADTOSDET",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"Oceane41@yahoo.com\",\r\n  \"password\": \"-1234*\",\r\n  \"phone_number\": \"01500010025\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Merchant\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/create",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative_Create-new-with Invalid Email",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code for invalid Email is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Show ‘Email must be a valid’ if the enter invalid email format.\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"must be a valid email\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"const lodash=require('lodash')\r",
+													"//import lodash from 'lodash'; //es6\r",
+													"\r",
+													"const randomNumber= lodash.random(001,100);\r",
+													"const BDphoneNumber = '015000100' + randomNumber.toString();\r",
+													"// console.log(BDphoneNumber)\r",
+													"\r",
+													"pm.collectionVariables.set(\"BDphoneNo\", BDphoneNumber)\r",
+													"//pm.environment.set(\"Customer_Phone\", BDphoneNumber);\r",
+													"//pm.environment.set(\"AgentphoneNo\", phoneNumber);\r",
+													"\r",
+													"\r",
+													"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+													"pm.collectionVariables.set(\"NameCount\", count);\r",
+													"// console.log(count)\r",
+													"//{{$timestamp}} {{$randomInt}}"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-AUTH-SECRET-KEY",
+												"value": " ROADTOSDET",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"Oceane41ya.co\",\r\n  \"password\": \"-1234*\",\r\n  \"phone_number\": \"01510010025\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Merchant\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/create",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative_Create-new-with Invalid Phone Number Format",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code for invalid Phone Number format is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Show ‘Phone Number must be a valid’ if the enter invalid phone format.\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"must be a valid Phone\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"\r",
+													"\r",
+													"\r",
+													"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+													"pm.collectionVariables.set(\"NameCount\", count);\r",
+													"// console.log(count)\r",
+													"//{{$timestamp}} {{$randomInt}}"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-AUTH-SECRET-KEY",
+												"value": " ROADTOSDET",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"Oceane41@ya.co\",\r\n  \"password\": \"-1234*\",\r\n  \"phone_number\": \"0151001abc\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Merchant\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/create",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative_Shouldnot Create new if phone no is shorter than 11 digits",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code for invalid Phone Number is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Shouldnot if phone number is shorter than 11 digits.\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"length must be at least 11 characters long\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"\r",
+													"\r",
+													"\r",
+													"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+													"pm.collectionVariables.set(\"NameCount\", count);\r",
+													"// console.log(count)\r",
+													"//{{$timestamp}} {{$randomInt}}"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-AUTH-SECRET-KEY",
+												"value": " ROADTOSDET",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"Oceane41@ya.co\",\r\n  \"password\": \"-1234*\",\r\n  \"phone_number\": \"0151001\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Merchant\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/create",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative_Create-new-with existing User Phone",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code for Existing Phone is 208\", function () {\r",
+													"    pm.response.to.have.status(208);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Show ‘User already exists’ if the phone number is already in use.\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"User already exists\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"\r",
+													"\r",
+													"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+													"pm.collectionVariables.set(\"NameCount\", count);\r",
+													"// console.log(count)\r",
+													"//{{$timestamp}} {{$randomInt}}"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-AUTH-SECRET-KEY",
+												"value": " ROADTOSDET",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"Oceane@yahoo.com\",\r\n  \"password\": \"-1234*\",\r\n  \"phone_number\": \"01500010025\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Merchant\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/create",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative_Create-new-without role",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code for without Role is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"If no valid role is provided during creation show: ‘Invalid role. This role does not exist in the Role table'\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"This role does not exist in the Role table\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"\r",
+													"\r",
+													"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+													"pm.collectionVariables.set(\"NameCount\", count);\r",
+													"// console.log(count)\r",
+													"//{{$timestamp}} {{$randomInt}}"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-AUTH-SECRET-KEY",
+												"value": " ROADTOSDET",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"Oceane@yahoo.com\",\r\n  \"password\": \"-1234*\",\r\n  \"phone_number\": \"01500010025\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{prod1}}/user/create",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative_user not found by email",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Show 'User not found' if user doesnot exist\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"User not found\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 404 for User not found\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "X-AUTH-SECRET-KEY",
+												"value": "{{partnerKey}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{prod1}}/user/search/email/test@dmoney.com",
+											"host": [
+												"{{prod1}}"
+											],
+											"path": [
+												"user",
+												"search",
+												"email",
+												"test@dmoney.com"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Create-new-Agent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"const ag_email = jsonData.user.email;\r",
+											"pm.environment.set(\"Agent1_email\", ag_email);\r",
+											"\r",
+											"const password = jsonData.user.password;\r",
+											"//pm.collectionVariables.set(\"pass\", password);\r",
+											"pm.environment.set(\"pass\", password);\r",
+											"\r",
+											"const AgentNo = jsonData.user.phone_number;\r",
+											"pm.environment.set(\"Agent1_Phone\", AgentNo);\r",
+											"\r",
+											"// const Id = jsonData.user.id;\r",
+											"// pm.collectionVariables.set(\"CusID\", Id);\r",
+											"\r",
+											"\r",
+											"pm.test(\"successfully Agent created\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User created\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for User created\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const lodash=require('lodash')\r",
+											"//import lodash from 'lodash'; //es6\r",
+											"\r",
+											"const randomNumber= lodash.random(001,100)\r",
+											"const BDphoneNumber = '015000100' + randomNumber.toString()\r",
+											"//console.log(BDphoneNumber)\r",
+											"\r",
+											"pm.collectionVariables.set(\"BDphoneNo\", BDphoneNumber)\r",
+											"//pm.environment.set(\"AgentphoneNo\", phoneNumber)\r",
+											"\r",
+											"\r",
+											"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+											"pm.collectionVariables.set(\"NameCount\", count);\r",
+											"// console.log(count)\r",
+											"//{{$timestamp}} {{$randomInt}}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": " ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"AP Hasan Agent {{NameCount}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"1234*\",\r\n  \"phone_number\": \"{{BDphoneNo}}\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Agent\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/user/create",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create-new-Agent 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"const ag_email = jsonData.user.email;\r",
+											"pm.environment.set(\"agent2_email\", ag_email);\r",
+											"\r",
+											"\r",
+											"const AgentNo = jsonData.user.phone_number;\r",
+											"pm.environment.set(\"agent2_Phone\", AgentNo);\r",
+											"\r",
+											"const Id = jsonData.user.id;\r",
+											"pm.collectionVariables.set(\"Agent2_ID\", Id);\r",
+											"\r",
+											"\r",
+											"pm.test(\"successfully Agent created\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User created\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for User created\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const lodash=require('lodash')\r",
+											"//import lodash from 'lodash'; //es6\r",
+											"\r",
+											"const randomNumber= lodash.random(001,100)\r",
+											"const BDphoneNumber = '015000100' + randomNumber.toString()\r",
+											"//console.log(BDphoneNumber)\r",
+											"\r",
+											"pm.collectionVariables.set(\"BDphoneNo\", BDphoneNumber)\r",
+											"//pm.environment.set(\"AgentphoneNo\", phoneNumber)\r",
+											"\r",
+											"\r",
+											"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+											"pm.collectionVariables.set(\"NameCount\", count);\r",
+											"// console.log(count)\r",
+											"//{{$timestamp}} {{$randomInt}}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": " ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"AP Hasan Agent {{NameCount}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"1234*\",\r\n  \"phone_number\": \"{{BDphoneNo}}\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Agent\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/user/create",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create-new-Merchant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"const email = jsonData.user.email;\r",
+											"pm.environment.set(\"Merchant_email\", email);\r",
+											"\r",
+											"const password = jsonData.user.password;\r",
+											"//pm.collectionVariables.set(\"pass\", password);\r",
+											"pm.environment.set(\"pass\", password);\r",
+											"\r",
+											"// const Id = jsonData.user.id;\r",
+											"// pm.collectionVariables.set(\"CusID\", Id);\r",
+											"\r",
+											"const MercNo = jsonData.user.phone_number;\r",
+											"pm.environment.set(\"Merchant_Phone\", MercNo);\r",
+											"\r",
+											"pm.test(\"successfully Merchant created\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User created\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for User created\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const lodash=require('lodash')\r",
+											"//import lodash from 'lodash'; //es6\r",
+											"\r",
+											"const randomNumber= lodash.random(001,100)\r",
+											"const BDphoneNumber = '015000100' + randomNumber.toString()\r",
+											"//console.log(BDphoneNumber)\r",
+											"\r",
+											"pm.collectionVariables.set(\"BDphoneNo\", BDphoneNumber)\r",
+											"//pm.environment.set(\"AgentphoneNo\", phoneNumber)\r",
+											"\r",
+											"\r",
+											"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+											"pm.collectionVariables.set(\"NameCount\", count);\r",
+											"// console.log(count)\r",
+											"//{{$timestamp}} {{$randomInt}}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": " ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"AP Hasan Marchant {{NameCount}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"1234*\",\r\n  \"phone_number\": \"{{BDphoneNo}}\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Merchant\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/user/create",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create-new-Customer1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"const email = jsonData.user.email;\r",
+											"pm.environment.set(\"Customer1_email\", email);\r",
+											"\r",
+											"// const password = jsonData.user.password;\r",
+											"// pm.environment.set(\"pass\", password);\r",
+											"\r",
+											"// const Id = jsonData.user.id;\r",
+											"// pm.collectionVariables.set(\"CusID\", Id);\r",
+											"\r",
+											"\r",
+											"const CustNo = jsonData.user.phone_number;\r",
+											"pm.environment.set(\"Customer1_Phone\",CustNo);\r",
+											"\r",
+											"\r",
+											"pm.test(\"successfully Customer created\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User created\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for User created\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const lodash=require('lodash')\r",
+											"//import lodash from 'lodash'; //es6\r",
+											"\r",
+											"const randomNumber= lodash.random(001,100);\r",
+											"const BDphoneNumber = '015000100' + randomNumber.toString();\r",
+											"// console.log(BDphoneNumber)\r",
+											"\r",
+											"pm.collectionVariables.set(\"BDphoneNo\", BDphoneNumber)\r",
+											"//pm.environment.set(\"Customer_Phone\", BDphoneNumber);\r",
+											"//pm.environment.set(\"AgentphoneNo\", phoneNumber);\r",
+											"\r",
+											"\r",
+											"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+											"pm.collectionVariables.set(\"NameCount\", count);\r",
+											"// console.log(count)\r",
+											"//{{$timestamp}} {{$randomInt}}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": " ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"1234*\",\r\n  \"phone_number\": \"{{BDphoneNo}}\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Customer\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/user/create",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create-new-Customer2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"const email = jsonData.user.email;\r",
+											"pm.environment.set(\"Customer2_email\", email);\r",
+											"\r",
+											"// const password = jsonData.user.password;\r",
+											"// pm.environment.set(\"pass\", password);\r",
+											"\r",
+											"// const Id = jsonData.user.id;\r",
+											"// pm.collectionVariables.set(\"CusID\", Id);\r",
+											"\r",
+											"\r",
+											"const CustNo = jsonData.user.phone_number;\r",
+											"pm.environment.set(\"Customer2_Phone\",CustNo);\r",
+											"\r",
+											"\r",
+											"pm.test(\"successfully Customer created\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User created\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for User created\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const lodash=require('lodash')\r",
+											"//import lodash from 'lodash'; //es6\r",
+											"\r",
+											"const randomNumber= lodash.random(001,100);\r",
+											"const BDphoneNumber = '015000100' + randomNumber.toString();\r",
+											"// console.log(BDphoneNumber)\r",
+											"\r",
+											"pm.collectionVariables.set(\"BDphoneNo\", BDphoneNumber)\r",
+											"//pm.environment.set(\"Customer_Phone\", BDphoneNumber);\r",
+											"//pm.environment.set(\"AgentphoneNo\", phoneNumber);\r",
+											"\r",
+											"\r",
+											"let count = Number(pm.collectionVariables.get(\"NameCount\") || 0) + 1;\r",
+											"pm.collectionVariables.set(\"NameCount\", count);\r",
+											"// console.log(count)\r",
+											"//{{$timestamp}} {{$randomInt}}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": " ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"AP Hasan Customer {{NameCount}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"1234*\",\r\n  \"phone_number\": \"{{BDphoneNo}}\",\r\n  \"nid\": \"1234567\",\r\n  \"role\": \"Customer\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/user/create",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search-All-user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User List found Successfully \", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User list\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Search\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "{{partnerKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{prod1}}/user/list?count=12&page=3&order=desc",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"list"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "12"
+								},
+								{
+									"key": "page",
+									"value": "3"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search-user-by-email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User found Successfully \", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User found\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Search\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "{{partnerKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{prod1}}/user/search/email/{{Customer1_email}}",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"search",
+								"email",
+								"{{Customer1_email}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User-Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"//\r",
+									"pm.test(\"User Updated successfully\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User updated\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200 for User Updated\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "{{partnerKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"AP Hasan Agent PUT\",\r\n    \"email\": \"putMethod@hotmail.com\",\r\n    \"password\": \"12345*\",\r\n    \"phone_number\": \"01500010068\",\r\n    \"nid\": \"1234567\",\r\n    \"role\": \"Agent\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/user/update/{{Agent2_ID}}",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"update",
+								"{{Agent2_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User-Patch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"//\r",
+									"pm.test(\"User Role Updated successfully\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User updated successfully\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200 for User Role Updated\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "{{partnerKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"Customer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/user/update/{{Agent2_ID}}",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"update",
+								"{{Agent2_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search-user-by-ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User found Successfully \", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User found\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Search\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "{{partnerKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{prod1}}/user/search/id/{{Agent2_ID}}",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"search",
+								"id",
+								"{{Agent2_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User-delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"//\r",
+									"pm.test(\"User deleted successfully\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User deleted successfully\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200 for User deleted\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "{{partnerKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/user/delete/{{Agent2_ID}}",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"delete",
+								"{{Agent2_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_admin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "1.2.System",
+			"item": [
+				{
+					"name": "Negative_TC",
+					"item": [
+						{
+							"name": "Deposit with expire token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Show 'Token invalid' for Expired Token System Login\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Token invalid!\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 403 for Expired token\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoic3lzdGVtQGRtb25leS5jb20iLCJyb2xlIjoiQWdlbnQiLCJpYXQiOjE3NjQ5MjU5MTIsImV4cCI6MTc2NDkyOTUxMn0.qvVVLI5EgR-TdkPhRHmYXvbSBgyMZSQRMWGk0SJpzws-----",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"SYSTEM\",\r\n  \"to_account\": \"{{Agent1_Phone}}\",\r\n  \"amount\": 300\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deposit with negative value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Accept only values from 1 to 100,000 for the deposit amount\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Minimum deposit amount is 10 tk and maximum deposit amount is 10000 tk\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 400 for invalid amount\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"SYSTEM\",\r\n  \"to_account\": \"{{Agent1_Phone}}\",\r\n  \"amount\": -300\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData= pm.response.json()\r",
+									"const access_token= jsonData.token\r",
+									"//pm.collectionVariables.set(\"token\",access_token)\r",
+									"pm.environment.set(\"token_system\", access_token)\r",
+									"\r",
+									"pm.test(\"Verify System login is successful\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Login successful\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Login\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"system@dmoney.com\",\r\n  \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/user/login",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit-to-Agent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Deposit successful to Agent\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Deposit successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 201 for Agent Deposit\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "ROADTOSDET",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"from_account\": \"SYSTEM\",\r\n  \"to_account\": \"{{Agent1_Phone}}\",\r\n  \"amount\": 300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/transaction/deposit",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"transaction",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit-to-Merchant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Deposit successful to Merchant\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Deposit successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 201 for Merchant Deposit\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "ROADTOSDET",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"from_account\": \"SYSTEM\",\r\n  \"to_account\": \"{{Merchant_Phone}}\",\r\n  \"amount\": 300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/transaction/deposit",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"transaction",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit-to-Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Deposit successful to Customer\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Deposit successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 201 for Customer Deposit\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "ROADTOSDET",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"from_account\": \"SYSTEM\",\r\n  \"to_account\": \"{{Customer1_Phone}}\",\r\n  \"amount\": 11\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/transaction/deposit",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"transaction",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_system}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "2.Agent",
+			"item": [
+				{
+					"name": "Negative_TC",
+					"item": [
+						{
+							"name": "Deposit with expire token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Show 'Token invalid' for Expired Token Agent Login\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Token invalid!\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 403 for Expired token\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoic3lzdGVtQGRtb25leS5jb20iLCJyb2xlIjoiQWdlbnQiLCJpYXQiOjE3NjQ5MjU5MTIsImV4cCI6MTc2NDkyOTUxMn0.qvVVLI5EgR-TdkPhRHmYXvbSBgyMZSQRMWGk0SJpzws-----",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Agent1_Phone}}\",\r\n  \"to_account\": \"{{Customer1_Phone}}\",\r\n  \"amount\": 300\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deposit with negative value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Accept only values from 1 to 100,000 for the deposit amount\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Minimum deposit amount is 10 tk and maximum deposit amount is 10000 tk\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 400 for invalid amount\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Agent1_Phone}}\",\r\n  \"to_account\": \"{{Customer1_Phone}}\",\r\n  \"amount\": -300\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deposit-to-Own number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Do not use Own number as the Receiver\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"From account and to account cannot be the same\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 400 for Own Receiver\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Agent1_Phone}}\",\r\n  \"to_account\": \"{{Agent1_Phone}}\",\r\n  \"amount\": 100\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deposit-to-Merchant number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Deposits to merchant accounts are not allowed\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Only Customer accounts allowed\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 403 for Merchant Receiver\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Agent1_Phone}}\",\r\n  \"to_account\": \"{{Merchant_Phone}}\",\r\n  \"amount\": 100\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData= pm.response.json()\r",
+									"const access_token= jsonData.token\r",
+									"//pm.collectionVariables.set(\"token\",access_token)\r",
+									"pm.environment.set(\"token_agent\", access_token)\r",
+									"\r",
+									"pm.test(\"Verify Agent login is successful\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Login successful\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Login\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{Agent1_email}}\",\r\n  \"password\": \"{{pass}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/user/login",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agent's balance Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Agent balance show successfully\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User balance\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Agent balance\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "ROADTOSDET",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/transaction/balance/{{Agent1_Phone}}",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"transaction",
+								"balance",
+								"{{Agent1_Phone}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agent's balance Limit Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Agent balance limit show successfully\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User limit\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"After deposit the remaining balance is less than 10,000\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"limit\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Agent balance Limit\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "ROADTOSDET",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/transaction/limit/{{Agent1_Phone}}",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"transaction",
+								"limit",
+								"{{Agent1_Phone}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit-to-Customer1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Deposit successful to Customer\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Deposit successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 201 for Customer Deposit\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "ROADTOSDET",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"from_account\": \"{{Agent1_Phone}}\",\r\n  \"to_account\": \"{{Customer1_Phone}}\",\r\n  \"amount\": 100\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/transaction/deposit",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"transaction",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_agent}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "3.Merchant",
+			"item": [
+				{
+					"name": "Negative_TC",
+					"item": [
+						{
+							"name": "withdraw with expire token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Show 'Token invalid' for Expired Token Merchant Login\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Token invalid!\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 403 for Expired token\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoic3lzdGVtQGRtb25leS5jb20iLCJyb2xlIjoiQWdlbnQiLCJpYXQiOjE3NjQ5MjU5MTIsImV4cCI6MTc2NDkyOTUxMn0.qvVVLI5EgR-TdkPhRHmYXvbSBgyMZSQRMWGk0SJpzws-----",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Merchant_Phone}}\",\r\n  \"to_account\": \"{{Agent1_Phone}}\",\r\n  \"amount\": 300\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/withdraw",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"withdraw"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "withdraw with negative value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Accept only values from 1 to 100,000 for the withdraw amount\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Minimum amount is 10 tk and maximum amount is 10000 tk\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 400 for invalid amount\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Merchant_Phone}}\",\r\n  \"to_account\": \"{{Agent1_Phone}}\",\r\n  \"amount\": -300\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/withdraw",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"withdraw"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Merchant Shouldnot Deposit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Merchant Shouldnot deposit money to any user\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Only Agent can deposit money\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 208 for invalid deposit\", function () {\r",
+											"    pm.response.to.have.status(208);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Merchant_Phone}}\",\r\n  \"to_account\": \"{{Customer1_Phone}}\",\r\n  \"amount\": 50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Withdraw to-Own number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Do not use own number as the Receiver\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"From account and to account cannot be the same\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 400 for Own Receiver\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Merchant_Phone}}\",\r\n  \"to_account\": \"{{Merchant_Phone}}\",\r\n  \"amount\": 100\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/withdraw",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"withdraw"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deposit-to-Other number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a Merchant Deposits to accounts are not allowed\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Only Agent can deposit money\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 403 for Customer Receiver\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Merchant_Phone}}\",\r\n  \"to_account\": \"{{Customer1_Phone}}\",\r\n  \"amount\": 100\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData= pm.response.json()\r",
+									"const access_token= jsonData.token\r",
+									"//pm.collectionVariables.set(\"token\",access_token)\r",
+									"pm.environment.set(\"token_merchant\", access_token)\r",
+									"\r",
+									"pm.test(\"Verify Merchant login is successful\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Login successful\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Login\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{Merchant_email}}\",\r\n  \"password\": \"{{pass}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/user/login",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Merchant's balance Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Merchant balance show successfully\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User balance\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200 for Merchant balance\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "ROADTOSDET",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/transaction/balance/{{Merchant_Phone}}",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"transaction",
+								"balance",
+								"{{Merchant_Phone}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw-to-Agent number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Merchant's Withdraw successful\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Withdraw successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 201 as Agent Receiver\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-AUTH-SECRET-KEY",
+								"value": "ROADTOSDET",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"from_account\": \"{{Merchant_Phone}}\",\r\n  \"to_account\": \"{{Agent1_Phone}}\",\r\n  \"amount\": 100\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod1}}/transaction/withdraw",
+							"host": [
+								"{{prod1}}"
+							],
+							"path": [
+								"transaction",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_merchant}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "4.Customer",
+			"item": [
+				{
+					"name": "Negative_TC",
+					"item": [
+						{
+							"name": "SendMoney with expire token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Show 'Token invalid' for Expired Token Customer Login\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Token invalid!\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 403 for Expired token\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoic3lzdGVtQGRtb25leS5jb20iLCJyb2xlIjoiQWdlbnQiLCJpYXQiOjE3NjQ5MjU5MTIsImV4cCI6MTc2NDkyOTUxMn0.qvVVLI5EgR-TdkPhRHmYXvbSBgyMZSQRMWGk0SJpzws-----",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Customer1_Phone}}\",\r\n  \"to_account\": \"{{Customer2_Phone}}\",\r\n  \"amount\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/sendmoney",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"sendmoney"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SendMoney with negative value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Accept only values from 1 to 100,000 for the SendMoney amount\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Minimum amount is 10 tk and maximum amount is 10000 tk\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 400 for invalid amount\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_customer1}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Customer1_Phone}}\",\r\n  \"to_account\": \"{{Customer2_Phone}}\",\r\n  \"amount\": -10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/sendmoney",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"sendmoney"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Customer Shouldnot Deposit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Customer Shouldnot deposit money to any user\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Only Agent can deposit money\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 208 for invalid deposit\", function () {\r",
+											"    pm.response.to.have.status(208);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_customer1}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Customer1_Phone}}\",\r\n  \"to_account\": \"{{Merchant_Phone}}\",\r\n  \"amount\": 50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SendMoney to-Own number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Do not use own number as the Receiver\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"From account and to account cannot be the same\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 400 for Own Receiver\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_customer1}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Customer1_Phone}}\",\r\n  \"to_account\": \"{{Customer1_Phone}}\",\r\n  \"amount\": 100\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/withdraw",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"withdraw"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deposit-to-Other number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a customer Deposits to other accounts are not allowed\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Only Agent can deposit money\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 403 for Customer Receiver\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_customer1}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Customer1_Phone}}\",\r\n  \"to_account\": \"{{Customer2_Phone}}\",\r\n  \"amount\": 100\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/deposit",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search-All-user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"User List found Successfully \", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User list\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200 for Search\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_customer1}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "{{partnerKey}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{prod1}}/user/list?count=15&page=1&order=desc",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"list"
+									],
+									"query": [
+										{
+											"key": "count",
+											"value": "15"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "customer1",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData= pm.response.json()\r",
+											"const access_token= jsonData.token\r",
+											"//pm.collectionVariables.set(\"token\",access_token)\r",
+											"pm.environment.set(\"token_customer1\", access_token)\r",
+											"\r",
+											"pm.test(\"Verify Customer login is successful\", function () {\r",
+											"    pm.expect(jsonData.message).to.eql(\"Login successful\")\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Status code is 200 for Login\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{Customer1_email}}\",\r\n  \"password\": \"{{pass}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/user/login",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Transaction List",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Transaction list found Successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Transaction list\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200 for Transaction Search\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{prod1}}/transaction/list?count=5",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"list"
+									],
+									"query": [
+										{
+											"key": "count",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Transaction Statement",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"const TrnxId = jsonData.transactions[0].trnxId;\r",
+											"\r",
+											"pm.collectionVariables.set(\"trnxId\", TrnxId);\r",
+											"console.log('TrnxId:', TrnxId);\r",
+											"\r",
+											"pm.test(\"User Transaction list found\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Transaction list\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200 for User Transaction Search\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{prod1}}/transaction/statement/{{Customer1_Phone}}",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"statement",
+										"{{Customer1_Phone}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Transaction Search",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"User List found Successfully \", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User list\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200 for Search\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{prod1}}/transaction/statement/{{trnxId}}",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"statement",
+										"{{trnxId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Customer_1 balance Check",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Customer balance show successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User balance\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for Customer balance\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/balance/{{Customer1_Phone}}",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"balance",
+										"{{Customer1_Phone}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SendMoney-to-Customer2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Send money successful to other Customer account\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Send money successful\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for Send money successful\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Customer1_Phone}}\",\r\n  \"to_account\": \"{{Customer2_Phone}}\",\r\n  \"amount\": 50\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/sendmoney",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"sendmoney"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Withdraw",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Withdraw successful to Agent account\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Withdraw successful\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for Withdraw\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Customer1_Phone}}\",\r\n  \"to_account\": \"{{Agent1_Phone}}\",\r\n  \"amount\": 10\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/withdraw",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"withdraw"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token_customer1}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "customer2",
+					"item": [
+						{
+							"name": "login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData= pm.response.json()\r",
+											"const access_token= jsonData.token\r",
+											"//pm.collectionVariables.set(\"token\",access_token)\r",
+											"pm.environment.set(\"token_customer2\", access_token)\r",
+											"\r",
+											"pm.test(\"Customer login is successful\", function () {\r",
+											"    pm.expect(jsonData.message).to.eql(\"Login successful\")\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Status code is 200 for Login\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{Customer2_email}}\",\r\n  \"password\": \"{{pass}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/user/login",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Transaction List",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Transaction list found Successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Transaction list\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200 for Transaction Search\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{prod1}}/transaction/list",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Transaction Statement",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"User Transaction list found\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Transaction list\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200 for User Transaction Search\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{prod1}}/transaction/statement/{{Customer2_Phone}}",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"statement",
+										"{{Customer2_Phone}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Customer_2 balance Check",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Customer-2 balance show successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User balance\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for Customer-2 balance\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/balance/{{Customer2_Phone}}",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"balance",
+										"{{Customer2_Phone}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Merchant Payment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Payment successful to Merchant account\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Payment successful\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 201 for Payment successful\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-SECRET-KEY",
+										"value": "ROADTOSDET",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"from_account\": \"{{Customer2_Phone}}\",\r\n  \"to_account\": \"{{Merchant_Phone}}\",\r\n  \"amount\": 10\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{prod1}}/transaction/payment",
+									"host": [
+										"{{prod1}}"
+									],
+									"path": [
+										"transaction",
+										"payment"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token_customer2}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BDphoneNo",
+			"value": ""
+		},
+		{
+			"key": "pass",
+			"value": ""
+		},
+		{
+			"key": "NameCount",
+			"value": ""
+		},
+		{
+			"key": "trnxId",
+			"value": ""
+		},
+		{
+			"key": "Agent2_ID",
+			"value": ""
+		}
+	]
+}
