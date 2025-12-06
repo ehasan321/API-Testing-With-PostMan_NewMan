@@ -47,13 +47,14 @@ Once the manual groundwork was complete, I implemented automated assertions to s
 - [API Documentation](https://documenter.getpostman.com/view/23316531/2sB3dPSqKR)
 
 
-- [Newman Report // cannot export for PC issue]()
+- [Newman Report _(issue doesn't fix fully, showing error in report)_](https://drive.google.com/file/d/1bWVhgEBvsd0JR4QAtVDD4poARudsMPua/view?usp=drive_link)
 
 
 ### Screenshot of Newman Report
-![image]()
+![image](https://drive.google.com/uc?export=view&id=1YXK6rH1sCpuT2VLWEhTydqhLleF79qD3)
 
-![image]()
+
+
 
 
 
