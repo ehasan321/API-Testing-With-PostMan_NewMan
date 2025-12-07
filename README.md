@@ -22,7 +22,6 @@ Once the manual groundwork was complete, I implemented automated assertions to s
 
 
 
-
 ## How to run this project?
 
 - Clone this project
@@ -35,6 +34,8 @@ Once the manual groundwork was complete, I implemented automated assertions to s
 ## Tools Used
 - Postman
 - Newman
+
+
 
 ## Video record of Entire Testing
 
