@@ -36,6 +36,9 @@ Once the manual groundwork was complete, I implemented automated assertions to s
 - Postman
 - Newman
 
+## Video record of Entire Testing
+
+[<img src="https://drive.google.com/uc?export=view&id=1GYWwgX1bJgbiX7T6-yNBCmzhwE_60sbd" width="700">](https://drive.google.com/file/d/1krg-HPwkp1G93Q3C8BlS0krxB6rSsoF7/view?usp=drive_link)
 
 
 ## All Report
@@ -43,14 +46,12 @@ Once the manual groundwork was complete, I implemented automated assertions to s
 
 - [Bug & Improvement Report](https://docs.google.com/spreadsheets/d/1JhzNF2ZpGeZY9yc7cLacG37XA2jI_6vJ/edit?usp=sharing&ouid=101565862462830262138&rtpof=true&sd=true)
 
-
 - [API Documentation](https://documenter.getpostman.com/view/23316531/2sB3dPSqKR)
-
 
 - [Newman Report _(issue doesn't fix fully, showing error in report)_](https://drive.google.com/file/d/1bWVhgEBvsd0JR4QAtVDD4poARudsMPua/view?usp=drive_link)
 
 
-### Screenshot of Newman Report
+- **Screenshot of Newman Report** <br>
 ![image](https://drive.google.com/uc?export=view&id=1YXK6rH1sCpuT2VLWEhTydqhLleF79qD3)
 
 
