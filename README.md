@@ -26,12 +26,12 @@ Once the manual groundwork was complete, I implemented automated assertions to s
 
 **Prerequisites:**
 
-- Node.js (LTS recommended)
-- npm (bundled with Node)
-- A Postman API key / secret required by the collection (set via environment)
+- `Node.js` (LTS recommended)
+- `npm` (bundled with Node)
+- A Postman `API key / secret required` by the collection (set via environment)
 
 **Quick start:**
-- Clone this project
+- Clone this project: `git clone git@github.com:ehasan321/API-Testing-With-PostMan_NewMan.git`
 - Then run the follwing command 
 
 ```bash
