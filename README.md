@@ -24,16 +24,27 @@ Once the manual groundwork was complete, I implemented automated assertions to s
 
 ## How to run this project?
 
+**Prerequisites:**
+
+- Node.js (LTS recommended)
+- npm (bundled with Node)
+- A Postman API key / secret required by the collection (set via environment)
+
+**Quick start:**
 - Clone this project
 - Then run the follwing command 
 
 ```bash
-  npm i
+  npm install
   npm run report.js
 ```
-## Tools Used
+
+## Tools/Tech
+- Node.js
 - Postman
 - Newman
+- HTML Report Extra
+
 
 
 
@@ -56,7 +67,10 @@ Once the manual groundwork was complete, I implemented automated assertions to s
 ![image](https://drive.google.com/uc?export=view&id=1YXK6rH1sCpuT2VLWEhTydqhLleF79qD3)
 
 
+---
+
+## Contributing:
+Improve or extend the Postman collection, add environment examples, and update report.js or package.json scripts if needed.
 
 
-
-
+Author: _@HASAN_
