@@ -7,18 +7,47 @@ I began by conducting thorough manual testing, covering all core features and us
 Once the manual groundwork was complete, I implemented automated assertions to streamline the verification process and enhance reliability. To wrap up the workflow, I generated a detailed execution report using Newman, providing clear insights into the overall stability and performance of the API.
 
 
-## Positive & Negative case are created based on follwing Scenraio:
+## Scenario Overview
+The following scenario covers both positive and negative test cases for DMoney transaction flow involving an Admin, Agent, Customers, and Merchant.
 
-1. Admin creates an Agent, two random Customers, and a Merchant
-2. Deposit money from the SYSTEM account to the Agent
-3. Agent deposits money to a Customer
-4. Check the Agent’s balance
-5. Send money from one Customer to another
-6. Withdraw money from a Customer to the Agent
-7. Check Customer balance and transaction statement by trnxId
-8. Make a payment from the second Customer to the Merchant
-9. Second Customer checks balance and transaction statement
-10. Merchant checks balance
+(1) Admin Setup: Admin creates:
+- One Agent
+- One Merchant
+- Two Customers (Customer A and Customer B)
+
+(2)	System to Agent Transaction
+-	Deposit funds from the SYSTEM account to the Agent account.
+
+(3)	Agent to Customer Transaction
+-	Agent deposits money to Customer A.
+
+(4)	Agent Balance Verification
+- Check the Agent’s balance after the deposit to Customer A.
+
+(5)	Customer-to-Customer Transfer
+-	Transfer money from Customer A to Customer B.
+
+(6)	Customer to Agent Withdrawal
+-	Withdraw money from Customer A to the Agent.
+
+(7)	Customer Balance & Statement Validation
+-	Customer A check Current balance
+-	Transaction statement using transaction ID (trnxId)
+
+(8)	Customer to Merchant Payment
+-	Customer B makes a payment to the Merchant.
+
+(9)	Second Customer Verification
+-	Customer B checks Updated balance
+-	Transaction statement
+
+(10)	Merchant Balance Verification
+-	Merchant checks and verifies the updated balance.
+
+
+
+
+
 
 
 
