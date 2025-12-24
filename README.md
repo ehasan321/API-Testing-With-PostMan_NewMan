@@ -89,11 +89,11 @@ The following scenario covers both positive and negative test cases for DMoney t
 
 - [API Documentation](https://documenter.getpostman.com/view/23316531/2sB3dPSqKR)
 
-- [Newman Report _(issue doesn't fix fully, showing error in report)_](https://drive.google.com/file/d/1bWVhgEBvsd0JR4QAtVDD4poARudsMPua/view?usp=drive_link)
+- [Newman Report](https://drive.google.com/file/d/171zCcdBzVEJrcQVLmctKX2ykKwNOI97W/view?usp=drive_link)
 
 
 - **Screenshot of Newman Report** <br>
-![image](https://drive.google.com/uc?export=view&id=1YXK6rH1sCpuT2VLWEhTydqhLleF79qD3)
+![image](https://drive.google.com/uc?export=view&id=1_sL6MT3aI9zDkO8HlNf5uK0eecUb62m8)
 
 
 ---
