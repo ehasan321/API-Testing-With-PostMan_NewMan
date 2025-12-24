@@ -93,7 +93,8 @@ The following scenario covers both positive and negative test cases for DMoney t
 
 
 - **Screenshot of Newman Report** <br>
-![image](https://drive.google.com/uc?export=view&id=1_sL6MT3aI9zDkO8HlNf5uK0eecUb62m8)
+![newmal CLI](https://drive.google.com/uc?export=view&id=14Kha9RsLUn6rx6Ucv92M2GZVURT1fIrm)
+![html Generated report](https://drive.google.com/uc?export=view&id=1_sL6MT3aI9zDkO8HlNf5uK0eecUb62m8)
 
 
 ---
